@@ -1,24 +1,24 @@
 const db = require("../models");
 module.exports = {
   findAll: function (req, res) {
-    db.Books.find(req.query)
-      .then((dbBooks) => res.json(dbBooks))
+    db.Book.find(req.query)
+      .then((dbBook) => res.json(dbBook))
       .catch((err) => res.status(422).json(err));
   },
   findById: function (req, res) {
-    db.Books.findById(req.params.id)
-      .then((dbBooks) => res.json(dbBooks))
+    db.Book.findById(req.params.id)
+      .then((dbBook) => res.json(dbBook))
       .catch((err) => res.status(422).json(err));
   },
   create: function (req, res) {
-    db.Books.create(req.body)
-      .then((dbBooks) => res.json(dbBooks))
+    db.Book.create(req.body)
+      .then((dbBook) => res.json(dbBook))
       .catch((err) => res.status(422).json(err));
   },
   remove: function (req, res) {
-    db.Books.findById(req.params.id)
-      .then((dbBooks) => dbBooks.remove())
-      .then((dbBooks) => res.json(dbBooks))
+    db.Book.findById(req.params.id)
+      .then((dbBook) => dbBook.remove())
+      .then((dbBook) => res.json(dbBook))
       .catch((err) => res.status(422).json(err));
   },
 };
