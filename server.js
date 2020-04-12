@@ -10,6 +10,10 @@ app.use(morgan("dev"));
 app.use(bodyparser.json());
 app.use(routes);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("front-end/build"));
+}
+
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/google-book-search",
   {
