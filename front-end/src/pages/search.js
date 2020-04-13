@@ -39,14 +39,14 @@ class Search extends Component {
     this.getBooks();
   };
 
-  handleJobSave = (id) => {
+  handleBookSave = (id) => {
     const book = this.state.books.find((book) => book.id === id);
     API.saveBook({
-      googleId: book.id,
+      id: book.id,
       title: book.volumeInfo.title,
       subtitle: book.volumeInfo.subtitle,
       link: book.volumeInfo.infoLink,
-      authors: book.volumeInfo.authors,
+      authors: book.volumeInfo.authors.toString(),
       description: book.volumeInfo.description,
       image: book.volumeInfo.imageLinks.thumbnail,
     }).then(() => this.getBooks());
@@ -68,7 +68,7 @@ class Search extends Component {
                 title={book.volumeInfo.title}
                 subtitle={book.volumeInfo.subtitle}
                 link={book.volumeInfo.infoLink}
-                authors={book.volumeInfo.authors}
+                authors={book.volumeInfo.authors.toString()}
                 image={book.volumeInfo.imageLinks.thumbnail}
                 description={book.volumeInfo.description}
                 Button={() => (
