@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { ListItem } from "../List";
 
 const Card = ({
@@ -30,7 +30,7 @@ const Card = ({
                   <a
                     href={link}
                     role="button"
-                    className="btn btn-outline-secondary heading-location ml-2"
+                    className="btn btn-outline-secondary heading-subtitle ml-2"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
