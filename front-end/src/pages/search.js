@@ -7,6 +7,7 @@ import API from "../utils/API";
 class Search extends Component {
   state = {
     books: [],
+    savedBooks: [],
     q: "",
   };
 
@@ -20,8 +21,11 @@ class Search extends Component {
   getBooks = () => {
     API.getBooks(this.state.q)
       .then((res) => {
+        const bookData = res.data.map((book.volumeInfo.authors) =>
+          this.handleAuthorsString(book.volumeInfo.authors)
+        );
         this.setState({
-          books: res.data,
+          books: bookData,
           currentPage: 1,
         });
       })
@@ -33,23 +37,43 @@ class Search extends Component {
         });
       });
   };
-
+  getSavedBooks = () => {
+    API.getSavedBooks()
+      .then((res) => {
+        this.setState({ savedBooks: res.data });
+      })
+      .catch(() => {
+        this.setState({
+          savedBooks: [],
+          message: "You did not have any book saved",
+        });
+      });
+  };
   handleFormSubmit = (event) => {
     event.preventDefault();
     this.getBooks();
   };
-
+  handleAuthorsString = (authors) => {
+    const authorsString = "";
+    if (typeof authors === "array") {
+      authorsString = authors.toString;
+    } else {
+      authorsString = authors;
+    }
+    return authorsString;
+  };
   handleBookSave = (id) => {
     const book = this.state.books.find((book) => book.id === id);
+    const authorsString = this.handleAuthorsString(book.volumeInfo.authors);
     API.saveBook({
       id: book.id,
       title: book.volumeInfo.title,
       subtitle: book.volumeInfo.subtitle,
       link: book.volumeInfo.infoLink,
-      authors: book.volumeInfo.authors.toString(),
+      authors: authorsString,
       description: book.volumeInfo.description,
       image: book.volumeInfo.imageLinks.thumbnail,
-    }).then(() => this.getBooks());
+    }).then(() => this.getSavedBooks());
   };
   render() {
     return (
@@ -68,7 +92,7 @@ class Search extends Component {
                 title={book.volumeInfo.title}
                 subtitle={book.volumeInfo.subtitle}
                 link={book.volumeInfo.infoLink}
-                authors={book.volumeInfo.authors.toString()}
+                authors={book.volumeInfo.authors}
                 image={book.volumeInfo.imageLinks.thumbnail}
                 description={book.volumeInfo.description}
                 Button={() => (
