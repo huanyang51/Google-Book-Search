@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd front-end && npm run start",
     "install": "cd front-end && npm install",
+    "server": "./node_modules/.bin/nodemon --ignore 'front-end/*' server.js",
     "build": "cd front-end && npm run build",
     "heroku-postbuild": "npm run build"
   },
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/huanyang51/google-book-search#readme",
   "dependencies": {
+    "@sentry/node": "^5.15.4",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "concurrently": "^5.1.0",
@@ -32,6 +34,7 @@
     "if-env": "^1.0.4",
     "mongoose": "^5.9.7",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.3",
     "path": "^0.12.7"
   }
 }

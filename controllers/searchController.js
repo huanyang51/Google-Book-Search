@@ -3,7 +3,7 @@ const axios = require("axios");
 module.exports = {
   findAll: function (req, res) {
     const params = {
-      q: req.body.q,
+      q: req.query.q,
     };
     const URL = `https://www.googleapis.com/books/v1/volumes?`;
     axios
