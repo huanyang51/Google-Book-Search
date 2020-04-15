@@ -21,11 +21,8 @@ class Search extends Component {
   getBooks = () => {
     API.getBooks(this.state.q)
       .then((res) => {
-        const bookData = res.data.map((book.volumeInfo.authors) =>
-          this.handleAuthorsString(book.volumeInfo.authors)
-        );
         this.setState({
-          books: bookData,
+          books: res.data,
           currentPage: 1,
         });
       })
@@ -53,18 +50,10 @@ class Search extends Component {
     event.preventDefault();
     this.getBooks();
   };
-  handleAuthorsString = (authors) => {
-    const authorsString = "";
-    if (typeof authors === "array") {
-      authorsString = authors.toString;
-    } else {
-      authorsString = authors;
-    }
-    return authorsString;
-  };
+
   handleBookSave = (id) => {
     const book = this.state.books.find((book) => book.id === id);
-    const authorsString = this.handleAuthorsString(book.volumeInfo.authors);
+    const authorsString = book.volumeInfo.authors.toString();
     API.saveBook({
       id: book.id,
       title: book.volumeInfo.title,
