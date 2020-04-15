@@ -10,8 +10,19 @@ module.exports = {
       .get(URL, {
         params,
       })
+      .then((results) =>
+        results.data.items.filter(
+          (result) =>
+            result.volumeInfo.title &&
+            result.volumeInfo.infoLink &&
+            result.volumeInfo.authors &&
+            result.volumeInfo.description &&
+            result.volumeInfo.imageLinks &&
+            result.volumeInfo.imageLinks.thumbnail
+        )
+      )
       .then((response) => {
-        res.json(response.data.items);
+        res.json(response);
       })
       .catch((err) => res.status(422).json(err));
   },
