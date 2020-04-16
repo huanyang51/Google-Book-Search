@@ -54,15 +54,21 @@ class Search extends Component {
   handleBookSave = (id) => {
     const book = this.state.books.find((book) => book.id === id);
     const authorsString = book.volumeInfo.authors.toString();
-    API.saveBook({
-      id: book.id,
-      title: book.volumeInfo.title,
-      subtitle: book.volumeInfo.subtitle,
-      link: book.volumeInfo.infoLink,
-      authors: authorsString,
-      description: book.volumeInfo.description,
-      image: book.volumeInfo.imageLinks.thumbnail,
-    }).then(() => this.getSavedBooks());
+    API.getSavedBooks().then((res) => {
+      if (res.data.find((bookSaved) => bookSaved.id === id)) {
+        alert("Book already Saved!");
+      } else {
+        API.saveBook({
+          id: book.id,
+          title: book.volumeInfo.title,
+          subtitle: book.volumeInfo.subtitle,
+          link: book.volumeInfo.infoLink,
+          authors: authorsString,
+          description: book.volumeInfo.description,
+          image: book.volumeInfo.imageLinks.thumbnail,
+        }).then(() => this.getSavedBooks());
+      }
+    });
   };
   render() {
     return (
